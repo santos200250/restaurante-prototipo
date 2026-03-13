@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+# 🍽️ Restaurante Prototipo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Un prototipo de aplicación web interactiva diseñado para la visualización del menú y la gestión inicial de pedidos de un restaurante. Desarrollado con un enfoque basado en componentes para ofrecer una navegación ágil y una experiencia de usuario (UX) fluida.
 
-## Available Scripts
+## 🚀 Características Principales
 
-In the project directory, you can run:
+* **Menú Dinámico:** Componentes reutilizables para el catálogo de platos (Entradas, Platos de Fondo, Bebidas).
+* **Single Page Application (SPA):** Navegación rápida sin recargas de página gracias al enrutamiento de React.
+* **Gestión de Estado:** Manejo del carrito de compras simulado (selección de productos y cálculo de totales).
+* **Diseño Responsivo:** Interfaz adaptable a dispositivos móviles, tablets y pantallas de escritorio.
 
-### `npm start`
+## 🛠️ Tecnologías Utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* **Frontend:** React, JavaScript (ES6+), CSS3 / HTML5.
+* **Control de Versiones:** Git & GitHub.
+* **Gestor de Paquetes:** npm / yarn.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## ⚙️ Instalación y Uso
 
-### `npm test`
+Sigue estos pasos para ejecutar el proyecto en tu entorno local:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Clona este repositorio en tu máquina:
+   ```bash
+   git clone [https://github.com/santos200250/restaurante-prototipo.git](https://github.com/santos200250/restaurante-prototipo.git)
+2. navega a la carpeta del proyecto
+    cd restaurante-prototipo
+3. instalar dependencias necesarias
+    npm install
+4. iniciar el servidor:
+    npm start

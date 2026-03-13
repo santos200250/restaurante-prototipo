@@ -24,7 +24,7 @@ export default function Configuracion() {
 
       <h2 className="text-3xl font-bold mb-6 text-zinc-800"> Configuración General</h2>
 
-      {/* INFO BÁSICA */}
+      {/* INFO básica */}
       <section className="bg-white p-5 rounded shadow mb-6">
         <h3 className="text-xl font-semibold mb-4 text-emerald-700"> Información del Restaurante</h3>
         <div className="grid md:grid-cols-2 gap-4">
