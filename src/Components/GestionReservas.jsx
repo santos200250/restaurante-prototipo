@@ -4,7 +4,7 @@ export default function GestionReservas() {
   const [reservas, setReservas] = useState([
     {
       id: 1,
-      fecha: '2025-07-03',
+      fecha: '2026-02-03',
       hora: '19:00',
       cliente: 'Ana López',
       personas: 4,
