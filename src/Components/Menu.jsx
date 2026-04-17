@@ -1,237 +1,124 @@
-
-import React, { useEffect, useState } from 'react';
-import Navegacion from './Navegacion';
-import Footer from './Footer';
-
-export default function Menu() {
-  const [categoria, setCategoria] = useState('Todos');
-  const [bebidaFiltro, setBebidaFiltro] = useState('Todas');
-  const [mostrar, setMostrar] = useState(false);
-  const categorias = ['Todos', 'Entradas', 'Platos Fuertes', 'Postres'];
-  const categoriasBebidas = ['Todas', 'Cervezas', 'Cócteles', 'Sin Alcohol'];
-
-  const platos = [
-    // Entradas platillos
-    {
-      categoria: 'Entradas',
-      nombre: 'Causa limeña',
-      descripcion: 'Puré de papa con pollo o atún, acompañado de palta y mayonesa.',
-      imagen: '/img/limeña.webp'
-    },
-    {
-      categoria: 'Entradas',
-      nombre: 'Papa a la huancaína',
-      descripcion: 'Papas con crema de ají amarillo y queso fresco.',
-      imagen: '/img/huancaina.webp'
-    },
-    {
-      categoria: 'Entradas',
-      nombre: 'Ensalada fresca',
-      descripcion: 'Verduras frescas con aderezo ligero.',
-      imagen: '/img/ensalada.webp'
-    },
-
-    
-    {
-      categoria: 'Platos Fuertes',
-      nombre: 'Ceviche clásico',
-      descripcion: 'Pescado con limón, cebolla, ají y camote.',
-      imagen: '/img/cebiche.webp'
-    },
-    {
-      categoria: 'Platos Fuertes',
-      nombre: 'Sudado de pescado',
-      descripcion: 'Pescado al vapor con cebolla y tomate.',
-      imagen: '/img/sudado.webp'
-    },
-    {
-      categoria: 'Platos Fuertes',
-      nombre: 'Arroz con mariscos',
-      descripcion: 'Arroz con camarones, calamar y ají.',
-      imagen: '/img/arroz-marizcos.webp'
-    },
-
-   
-    {
-      categoria: 'Platos Fuertes',
-      nombre: 'Pachamanca',
-      descripcion: 'Carnes cocidas bajo tierra con hierbas y papas.',
-      imagen: '/img/pachamanca.webp'
-    },
-    {
-      categoria: 'Platos Fuertes',
-      nombre: 'Trucha frita',
-      descripcion: 'Trucha dorada acompañada de papas.',
-      imagen: '/img/trucha.webp'
-    },
-    {
-      categoria: 'Platos Fuertes',
-      nombre: 'Chicharrón con mote',
-      descripcion: 'Cerdo frito con maíz blanco y ensalada.',
-      imagen: '/img/chicharron.webp'
-    },
-
-    
-    {
-      categoria: 'Platos Fuertes',
-      nombre: 'Juane',
-      descripcion: 'Arroz con gallina envuelto en hoja de bijao.',
-      imagen: '/img/juane.webp'
-    },
-    {
-      categoria: 'Platos Fuertes',
-      nombre: 'Tacacho con cecina',
-      descripcion: 'Plátano asado con carne seca.',
-      imagen: '/img/tacacho.webp'
-    },
-    {
-      categoria: 'Platos Fuertes',
-      nombre: 'Caldo de Gallina',
-      descripcion: 'Presa de gallina con su huevo sancochado y su cancha.',
-      imagen: '/img/caldo.webp'
-    },
-
-    // Postres
-    {
-      categoria: 'Postres',
-      nombre: 'Tarta de Chocolate',
-      descripcion: 'Planchas de bizcocho de chocolate con capa de mermelada de damasco y chocolate..',
-      imagen: '/img/tarta.webp'
-    },
-    {
-      categoria: 'Postres',
-      nombre: 'Tiramisú',
-      descripcion: 'Hecho a base de café, licor y crema..',
-      imagen: '/img/tiramisu.webp'
-    },
-    {
-      categoria: 'Postres',
-      nombre: 'Panna Cotta',
-      descripcion: 'Hecho a base de crema de leche, azúcar y gelatinizantes.',
-      imagen: '/img/panna.webp'
-    },
-    {
-      categoria: 'Postres',
-      nombre: 'Pávlola',
-      descripcion: 'Hecha a base de merengue horneado sobre la cual se coloca crema batida, chocolate y trozos de fruta.',
-      imagen: '/img/pavlela.webp'
-    },
-    {
-      categoria: 'Postres',
-      nombre: 'Crema de Papaya',
-      descripcion: 'Hecho a base de una crema de papaya y se acostumbra servirlo con helado de vainilla..',
-      imagen: '/img/papaya.webp'
-    },
-    {
-      categoria: 'Postres',
-      nombre: 'Cholado',
-      descripcion: ' Este postre consiste en un recipiente con la base llena de hielo raspado, coronado con frutas picadas, leche condensada y salsas dulces. .',
-      imagen: '/img/cholado.webp'
-    },
-  ];
-
-  const bebidas = [
-    // Cervezas
-    { nombre: 'Cusqueña Negra', categoria: 'Cervezas', descripcion: 'Cerveza oscura peruana con sabor intenso.', imagen: '/img/cuzquena.webp' },
-    { nombre: 'Pilsen Callao', categoria: 'Cervezas', descripcion: 'Cerveza ligera ideal para reuniones.', imagen: '/img/pilsen.webp' },
-    { nombre: 'Cristal', categoria: 'Cervezas', descripcion: 'Clásica cerveza peruana.', imagen: '/img/cristal.webp' },
-    { nombre: 'Arequipeña', categoria: 'Cervezas', descripcion: 'Cerveza regional del sur.', imagen: '/img/arequipena.webp' },
-    { nombre: 'Barena', categoria: 'Cervezas', descripcion: 'Cerveza suave tipo lager.', imagen: '/img/barena.webp' },
-
-    // Cócteles
-    { nombre: 'Pisco Sour', categoria: 'Cócteles', descripcion: 'Cóctel emblemático del Perú.', imagen: '/img/pisco.webp' },
-    { nombre: 'Chilcano', categoria: 'Cócteles', descripcion: 'Pisco con ginger ale y limón.', imagen: '/img/chilcano.webp' },
-    { nombre: 'Mojito', categoria: 'Cócteles', descripcion: 'Ron con hierbabuena y limón.', imagen: '/img/mojito.webp' },
-    { nombre: 'Caipirinha', categoria: 'Cócteles', descripcion: 'Cóctel de cachaça con lima.', imagen: '/img/caipirinha.webp' },
-    { nombre: 'Piña Colada', categoria: 'Cócteles', descripcion: 'Refrescante cóctel tropical.', imagen: '/img/pina.webp' },
-
-    // Sin Alcohol
-    { nombre: 'Chicha Morada', categoria: 'Sin Alcohol', descripcion: 'Bebida tradicional a base de maíz morado.', imagen: '/img/morada.webp' },
-    { nombre: 'Limonada', categoria: 'Sin Alcohol', descripcion: 'Bebida cítrica y refrescante.', imagen: '/img/limonada.webp' },
-    { nombre: 'Agua de Coco', categoria: 'Sin Alcohol', descripcion: 'Natural y refrescante.', imagen: '/img/coco.webp' },
-    { nombre: 'Refresco de Maracuyá', categoria: 'Sin Alcohol', descripcion: 'Tropical y delicioso.', imagen: '/img/maracuya.webp' },
-    { nombre: 'Emoliente', categoria: 'Sin Alcohol', descripcion: 'Infusión tradicional peruana.', imagen: '/img/emoliente.webp' }
-  ];
-
-   const platosFiltrados = categoria === 'Todos'
-    ? platos
-    : platos.filter(p => p.categoria === categoria);
-
-  const bebidasFiltradas = bebidaFiltro === 'Todas'
-    ? bebidas
-    : bebidas.filter(b => b.categoria === bebidaFiltro);
+import React, { useContext, useState } from 'react';
+import { PlatosContext } from '../context/PlatosContext';
+import { useNavigate } from 'react-router-dom';
+// --- APLICAMOS LA OPTIMIZACIÓN (REACT.MEMO) ---
+// Extraemos la tarjeta a su propio componente y la envolvemos con React.memo.
+// Esto evita re-renderizados innecesarios en el navegador del cliente.
+const PlatoCard = React.memo(({ plato }) => {
+  // Inicializamos el navegador para poder cambiar de página
+  const navigate = useNavigate(); 
 
   return (
-    <div className="bg-dark text-white py-5" style={{ paddingTop: '80px', minHeight: '100vh' }}>
-      <Navegacion />
-      <div className="container">
-        <h2 className="text-center mb-4">Platillos</h2>
-
-        <div className="d-flex justify-content-center gap-3 mb-4 flex-wrap">
-          {categorias.map(cat => (
-            <button
-              key={cat}
-              className={`btn btn-${categoria === cat ? 'light' : 'outline-light'}`}
-              onClick={() => setCategoria(cat)}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        <Seccion platos={platosFiltrados} />
-
-        <h2 className="text-center mt-5 mb-3">Bebidas</h2>
-        <div className="d-flex justify-content-center gap-3 mb-4 flex-wrap">
-          {categoriasBebidas.map(cat => (
-            <button
-              key={cat}
-              className={`btn btn-${bebidaFiltro === cat ? 'success' : 'outline-success'}`}
-              onClick={() => setBebidaFiltro(cat)}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        <Seccion platos={bebidasFiltradas} />
-      </div>
-      <Footer />
-    </div>
-  );
-}
-
-function Seccion({ platos }) {
-  return (
-    <div className="row row-cols-1 row-cols-md-3 g-4">
-      {platos.map((plato, index) => (
-        <div className="col" key={index}>
-          <div className="card h-100 bg-secondary text-white shadow-lg border-0 d-flex flex-row align-items-center p-2">
-            <img
-              src={plato.imagen}
-              alt={plato.nombre}
-              style={{
-                width: '120px',
-                height: '120px',
-                objectFit: 'cover',
-                borderRadius: '10px',
-                transition: 'transform 0.4s ease',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
-              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-            />
-            <div className="ms-3">
-              <h5 className="card-title mb-1">{plato.nombre}</h5>
-              <p className="card-text small">{plato.descripcion}</p>
-            </div>
+    <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group flex flex-col">
+      {/* Imagen del Plato */}
+      <div className="h-56 overflow-hidden relative bg-gray-200">
+        {plato.imagen ? (
+          <img 
+            src={plato.imagen} 
+            alt={plato.nombre} 
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800'; }}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-400 bg-gray-200">
+            <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
           </div>
+        )}
+        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-1.5 rounded-xl font-black text-red-600 shadow-sm">
+          S/ {Number(plato.precio).toFixed(2)}
+        </div>
+      </div>
+
+      {/* Detalles del Plato */}
+      <div className="p-6 flex flex-col flex-grow text-center">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">{plato.categoria}</span>
+        <h3 className="text-xl font-bold text-[#2A2A35] mb-4">{plato.nombre}</h3>
+        <div className="mt-auto pt-4">
+          
+          {/* --- BOTÓN ACTUALIZADO --- */}
+          <button 
+            onClick={() => navigate('/reserva')} 
+            className="w-full border-2 border-gray-200 text-[#2A2A35] hover:border-red-600 hover:text-red-600 font-bold py-2.5 rounded-xl transition-colors flex justify-center items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+            Reservar Mesa para Pedir
+          </button>
           
         </div>
-        
-      ))}
-      
+      </div>
     </div>
-    
+  );
+});
+
+PlatoCard.displayName = 'PlatoCard';
+
+// --- COMPONENTE PRINCIPAL ---
+export default function Menu() {
+  const { platos, cargando } = useContext(PlatosContext);
+  const [categoriaActiva, setCategoriaActiva] = useState('Todos');
+
+  const categorias = ['Todos', 'Entradas', 'Platos Fuertes', 'Postres', 'Bebidas'];
+
+  const platosFiltrados = categoriaActiva === 'Todos' 
+    ? platos 
+    : platos.filter(plato => plato.categoria === categoriaActiva);
+
+  return (
+    <div className="pt-28 pb-24 min-h-screen bg-gray-50 font-sans">
+      <div className="max-w-7xl mx-auto px-4">
+        
+        {/* Título de la página */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#2A2A35] mb-4">Nuestro Menú</h1>
+          <div className="h-1 w-24 bg-red-600 mx-auto rounded"></div>
+          <p className="text-[#6C6C75] mt-6 max-w-2xl mx-auto text-lg">
+            Descubre los sabores auténticos que hemos preparado para ti. Ingredientes frescos y recetas tradicionales.
+          </p>
+        </div>
+
+        {/* Botones de Filtro */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {categorias.map(categoria => (
+            <button
+              key={categoria}
+              onClick={() => setCategoriaActiva(categoria)}
+              className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-sm ${
+                categoriaActiva === categoria 
+                  ? 'bg-red-600 text-white' 
+                  : 'bg-white text-[#6C6C75] hover:bg-gray-100 hover:text-[#2A2A35]'
+              }`}
+            >
+              {categoria}
+            </button>
+          ))}
+        </div>
+
+        {/* Pantalla de Carga */}
+        {cargando ? (
+          <div className="flex flex-col items-center justify-center py-20">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-red-600 mb-4"></div>
+            <p className="text-[#6C6C75] font-bold animate-pulse">Cargando nuestra carta desde el servidor...</p>
+          </div>
+        ) : (
+          /* Grilla de Platillos */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {platosFiltrados.length > 0 ? (
+              // Usamos el componente optimizado aquí
+              platosFiltrados.map(plato => (
+                <PlatoCard key={plato.id} plato={plato} />
+              ))
+            ) : (
+              <div className="col-span-full flex flex-col items-center justify-center py-16 text-center">
+                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4 text-gray-400">
+                  <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+                <h3 className="text-xl font-bold text-[#2A2A35]">Aún no hay platillos aquí</h3>
+                <p className="text-gray-500 mt-2">Estamos preparando nuevas opciones para esta categoría.</p>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

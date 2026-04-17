@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export default function GestionMesas() {
   const [mesas, setMesas] = useState([
     { numero: 1, cliente: '', tiempo: '', fecha: '', estado: 'Disponible' },
-    { numero: 2, cliente: 'Luis', tiempo: '12:30', fecha: '2025-07-02', estado: 'Ocupado' },
+    { numero: 2, cliente: 'Luis', tiempo: '12:30', fecha: '2026-07-02', estado: 'Ocupado' },
     { numero: 3, cliente: '', tiempo: '', fecha: '', estado: 'Reservada' },
   ]);
 
@@ -49,123 +49,156 @@ export default function GestionMesas() {
     }
   };
 
+  // Función para asignar colores a las etiquetas de estado
+  const getEstadoBadge = (estado) => {
+    switch (estado) {
+      case 'Disponible':
+        return 'bg-green-100 text-green-700 border-green-200';
+      case 'Ocupado':
+        return 'bg-red-100 text-red-700 border-red-200';
+      case 'Reservada':
+        return 'bg-amber-100 text-amber-700 border-amber-200';
+      default:
+        return 'bg-gray-100 text-gray-700 border-gray-200';
+    }
+  };
+
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-     
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-3xl font-bold text-zinc-800">Gestión de Mesas</h2>
+    <div className="p-8 bg-gray-50 min-h-screen font-sans">
+      
+      {/* Encabezado */}
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">Gestión de Mesas</h2>
+          <p className="text-sm text-gray-500 mt-1">Administra el estado y las reservas de las mesas del local.</p>
+        </div>
         <button
-          className="btn-guardar"
+          className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors shadow-sm"
           onClick={() => {
             setFormData({ cliente: '', estado: 'Disponible', tiempo: '', fecha: '' });
             setEditarMesa('nueva');
             setMostrarAgregar(true);
           }}
         >
-          ➕ Agregar Mesa
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+          Agregar Mesa
         </button>
       </div>
 
-     
-      <div className="overflow-x-auto bg-white rounded shadow">
-        <table className="min-w-full text-sm text-left">
-          <thead className="bg-zinc-900 text-white">
-            <tr>
-              <th className="p-3"># Mesa</th>
-              <th className="p-3">Cliente</th>
-              <th className="p-3">Hora</th>
-              <th className="p-3">Fecha</th>
-              <th className="p-3">Estado</th>
-              <th className="p-3">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {mesas.map((mesa) => (
-              <tr key={mesa.numero} className="border-b hover:bg-gray-50">
-                <td className="p-3 font-semibold text-zinc-700">{mesa.numero}</td>
-                <td className="p-3">{mesa.cliente || '-'}</td>
-                <td className="p-3">{mesa.tiempo || '-'}</td>
-                <td className="p-3">{mesa.fecha || '-'}</td>
-                <td className="p-3">
-                  <span className={`px-2 py-1 rounded text-white font-medium ${
-                    mesa.estado === 'Ocupado' ? 'bg-red-500' :
-                    mesa.estado === 'Reservada' ? 'bg-yellow-500' :
-                    'bg-green-500'
-                  }`}>
-                    {mesa.estado}
-                  </span>
-                </td>
-                <td className="p-3 space-x-2">
-                  <button
-                    className="btn-cancelar"
-                    onClick={() => abrirModal(mesa)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    className="btn-guardar"
-                    onClick={() => eliminarMesa(mesa.numero)}
-                  >
-                    Eliminar
-                  </button>
-                </td>
+      {/* Tabla */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full text-sm text-left whitespace-nowrap">
+            <thead className="bg-gray-50 border-b border-gray-100 text-gray-500 uppercase text-xs font-semibold tracking-wider">
+              <tr>
+                <th className="px-6 py-4"># Mesa</th>
+                <th className="px-6 py-4">Cliente</th>
+                <th className="px-6 py-4">Hora</th>
+                <th className="px-6 py-4">Fecha</th>
+                <th className="px-6 py-4">Estado</th>
+                <th className="px-6 py-4 text-right">Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {mesas.map((mesa) => (
+                <tr key={mesa.numero} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4 font-bold text-gray-700">{mesa.numero}</td>
+                  <td className="px-6 py-4 text-gray-600">{mesa.cliente || <span className="text-gray-400 italic">Sin asignar</span>}</td>
+                  <td className="px-6 py-4 text-gray-600">{mesa.tiempo || '-'}</td>
+                  <td className="px-6 py-4 text-gray-600">{mesa.fecha || '-'}</td>
+                  <td className="px-6 py-4">
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getEstadoBadge(mesa.estado)}`}>
+                      {mesa.estado}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 flex justify-end gap-2">
+                    <button
+                      className="text-indigo-600 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-md font-medium transition-colors"
+                      onClick={() => abrirModal(mesa)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-md font-medium transition-colors"
+                      onClick={() => eliminarMesa(mesa.numero)}
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      
+      {/* Modal */}
       {(editarMesa !== null || mostrarAgregar) && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-full max-w-md">
-            <h3 className="text-xl font-bold mb-4">
-              {editarMesa === 'nueva' ? 'Agregar Nueva Mesa' : `Editar Mesa #${editarMesa}`}
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md transform transition-all">
+            <h3 className="text-xl font-bold text-gray-800 mb-6">
+              {editarMesa === 'nueva' ? 'Registrar Nueva Mesa' : `Actualizar Mesa #${editarMesa}`}
             </h3>
 
-            <div className="space-y-3">
-              <input
-                type="text"
-                placeholder="Nombre del cliente"
-                className="w-full border px-3 py-2 rounded"
-                value={formData.cliente}
-                onChange={(e) => setFormData({ ...formData, cliente: e.target.value })}
-              />
-              <input
-                type="time"
-                className="w-full border px-3 py-2 rounded"
-                value={formData.tiempo}
-                onChange={(e) => setFormData({ ...formData, tiempo: e.target.value })}
-              />
-              <input
-                type="date"
-                className="w-full border px-3 py-2 rounded"
-                value={formData.fecha}
-                onChange={(e) => setFormData({ ...formData, fecha: e.target.value })}
-              />
-              <select
-                className="w-full border px-3 py-2 rounded"
-                value={formData.estado}
-                onChange={(e) => setFormData({ ...formData, estado: e.target.value })}
-              >
-                <option value="Disponible">Disponible</option>
-                <option value="Ocupado">Ocupado</option>
-                <option value="Reservada">Reservada</option>
-              </select>
+            <div className="space-y-4 text-sm">
+              <div>
+                <label className="block text-gray-700 font-medium mb-1">Nombre del Cliente</label>
+                <input
+                  type="text"
+                  placeholder="Ej. Juan Pérez"
+                  className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                  value={formData.cliente}
+                  onChange={(e) => setFormData({ ...formData, cliente: e.target.value })}
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-700 font-medium mb-1">Hora</label>
+                  <input
+                    type="time"
+                    className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                    value={formData.tiempo}
+                    onChange={(e) => setFormData({ ...formData, tiempo: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-medium mb-1">Fecha</label>
+                  <input
+                    type="date"
+                    className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                    value={formData.fecha}
+                    onChange={(e) => setFormData({ ...formData, fecha: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-medium mb-1">Estado de la Mesa</label>
+                <select
+                  className="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white"
+                  value={formData.estado}
+                  onChange={(e) => setFormData({ ...formData, estado: e.target.value })}
+                >
+                  <option value="Disponible">🟢 Disponible</option>
+                  <option value="Ocupado">🔴 Ocupado</option>
+                  <option value="Reservada">🟠 Reservada</option>
+                </select>
+              </div>
             </div>
 
-            <div className="mt-4 flex justify-end gap-2">
+            <div className="mt-8 flex justify-end gap-3">
               <button
-                className="btn-cancelar"
+                className="px-5 py-2.5 text-gray-700 font-medium bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                 onClick={cerrarModal}
               >
                 Cancelar
               </button>
               <button
-                className="btn-guardar"
+                className="px-5 py-2.5 text-white font-medium bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition-colors"
                 onClick={guardarCambios}
               >
-                Guardar
+                Guardar Cambios
               </button>
             </div>
           </div>

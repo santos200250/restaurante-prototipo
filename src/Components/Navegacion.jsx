@@ -1,78 +1,66 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-	
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Importante para que funcionen las rutas
+
+
 export default function Navegacion() {
-    return (
-    <div>
-         <div class="container ">
-       <header class="d-flex flex-wrap py-3">
+  const [menuAbierto, setMenuAbierto] = useState(false);
 
+  return (
+    <nav className="bg-zinc-900 text-white sticky top-0 z-50 shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          
+          {/* Logo */}
+          <Link to="/" className="flex-shrink-0 flex items-center cursor-pointer">
+            <span className="font-bold text-2xl tracking-wider uppercase text-red-500">
+              Sabores<span className="text-white">DelPerú</span>
+            </span>
+          </Link>
 
-         <nav className="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top" style={{ backgroundColor: '#2c2c2c' }}>
+          {/* Enlaces (Escritorio) - Deben coincidir con los path de App.js */}
+          <div className="hidden md:flex space-x-8 items-center">
+            <Link to="/" className="hover:text-red-500 transition-colors px-3 py-2 text-sm font-medium">Inicio</Link>
+            <Link to="/menu" className="hover:text-red-500 transition-colors px-3 py-2 text-sm font-medium">Menú</Link>
+            <Link to="/nosotros" className="hover:text-red-500 transition-colors px-3 py-2 text-sm font-medium">Nosotros</Link>
+            <Link to="/reserva" className="hover:text-red-500 transition-colors px-3 py-2 text-sm font-medium">Reservar Mesa</Link>
+            <Link to="/contactos" className="hover:text-red-500 transition-colors px-3 py-2 text-sm font-medium">Contacto</Link>
+            
+            <Link 
+              to="/login" 
+              className="ml-4 bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg text-sm font-bold transition-colors shadow-md"
+            >
+              Iniciar Sesión
+            </Link>
+          </div>
 
-        <div class="container">
-           <a class="navbar-brand" href="#"> Restaurante</a>
-           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-             <span class="navbar-toggler-icon"></span>
-           </button>
-           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    
-              <li class="nav-item">
-               <Link to="/">
-               <a class="nav-link" href=""  ariaCurrentWhenActive="page">Inicio</a>
-               </Link>
-                                             
-               </li>
-              
-               <li class="nav-item">
-               <Link to="/menu">
-               <a class="nav-link" href=""  ariaCurrentWhenActive="page">Menu</a>
-               </Link>
-                                             
-               </li>
-               <li class="nav-item">
-               <Link to="/reserva">
-               <a class="nav-link" href=""  ariaCurrentWhenActive="page">Reserva una Mesa</a>
-               </Link>
-                                             
-               </li>
-               <li class="nav-item">
-               <Link to="/horario">
-               <a class="nav-link" href=""  ariaCurrentWhenActive="page">Horario y Ubicaciones</a>
-               </Link>
-                                             
-               </li>
+          {/* Botón Móvil */}
+          <div className="md:hidden flex items-center">
+            <button onClick={() => setMenuAbierto(!menuAbierto)} className="text-gray-300 hover:text-white">
+              <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {menuAbierto ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
 
-               
-               <li class="nav-item">
-               <Link to="/contactos">
-               <a class="nav-link" href=""  ariaCurrentWhenActive="page">Contactanos</a>
-               </Link>
-                                             
-               </li>
-
-               
-
-                <li class="nav-item">
-               <Link to="/login">
-               <a class="nav-link" href=""  ariaCurrentWhenActive="page">Login</a>
-               </Link>
-                                             
-               </li>
-
-    
-             </ul>
-           </div>
-         </div>
-       </nav>
-    
-     </header>
-    </div>
-
-
-
-    </div>
-  )
+      {/* Menú Móvil */}
+      {menuAbierto && (
+        <div className="md:hidden bg-zinc-800 border-t border-zinc-700">
+          <div className="px-4 pt-2 pb-6 space-y-2">
+            <Link to="/" onClick={() => setMenuAbierto(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-zinc-700">Inicio</Link>
+            <Link to="/menu" onClick={() => setMenuAbierto(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-zinc-700">Menú</Link>
+            <Link to="/reserva" onClick={() => setMenuAbierto(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-zinc-700">Reservar Mesa</Link>
+            <Link to="/nosotros" onClick={() => setMenuAbierto(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-zinc-700">Nosotros</Link>
+            <Link to="/contactos" onClick={() => setMenuAbierto(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-zinc-700">Contacto</Link>
+            <Link to="/login" onClick={() => setMenuAbierto(false)} className="block mt-4 text-center px-3 py-3 rounded-md text-base font-bold bg-red-600 text-white">Iniciar Sesión</Link>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
 }
