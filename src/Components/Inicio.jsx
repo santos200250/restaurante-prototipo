@@ -19,9 +19,9 @@ export default function Inicio() {
   ];
 
   return (
-    <div className="min-h-screen font-sans bg-gray-50 ">
+    <div className="min-h-screen font-sans bg-gray-100 ">
       
-      {/* 1. HERO SECTION (Portada) */}
+      {/* portada */}
       <section className="relative h-[80vh] flex flex-col justify-center items-center text-center">
         <div 
           className="absolute inset-0 bg-cover bg-center z-0"

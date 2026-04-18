@@ -7,7 +7,7 @@ import { ReservasContext } from '../context/ReservasContext';
 
 export default function PanelAdmin() {
   const navigate = useNavigate();
-  const [seccionActiva, setSeccionActiva] = useState('reservas'); // Empezamos en reservas para probar
+  const [seccionActiva, setSeccionActiva] = useState('reservas'); 
 
   const [idPlatoEditando, setIdPlatoEditando] = useState(null);
   
@@ -17,7 +17,7 @@ export default function PanelAdmin() {
   // --- EXTRAEMOS RESERVAS DE LA API ---
   const { reservas, cargandoReservas, agregarReserva, eliminarReserva } = useContext(ReservasContext);
 
-  // --- LÓGICA DE MESAS (Se calcula dinámicamente con la API) ---
+  //
   const mesas = Array.from({ length: 15 }, (_, i) => {
     const numeroMesa = (i + 1).toString().padStart(2, '0');
     // Buscamos en MockAPI si esta mesa ya tiene una reserva
@@ -50,28 +50,63 @@ export default function PanelAdmin() {
     setIdPlatoEditando(plato.id); 
     setMostrarModalPlato(true);
   };
-
   const handleGuardarPlato = (e) => {
     e.preventDefault();
+
+    // === FILTRO ===
+    const nombreLimpio = nuevoPlato.nombre.trim();
+    const precioNumerico = parseFloat(nuevoPlato.precio);
+
+    // El nombre no puede estar vacío
+    if (!nombreLimpio) {
+      alert("⚠️ Error: El nombre del platillo no puede estar vacío.");
+      return; 
+    }
+
+    // El precio debe ser un número válido y mayor a cero
+    if (isNaN(precioNumerico) || precioNumerico <= 0) {
+      alert("⚠️ Error: Por favor ingresa un precio válido, mayor a S/ 0.00.");
+      return;
+    }
+
+    // nombres duplicados
+    
+    const platoDuplicado = platos.find(
+      (p) => p.nombre.toLowerCase() === nombreLimpio.toLowerCase() && p.id !== idPlatoEditando
+    );
+
+    if (platoDuplicado) {
+      alert(`⚠️ Error: Ya existe un platillo registrado con el nombre "${nombreLimpio}".`);
+      return;
+    }
+    
+
+    // SI PASA TODOS LOS FILTROS, PROCEDEMOS A GUARDAR:
     if (idPlatoEditando) {
+      // Editar
       editarPlato(idPlatoEditando, { 
         ...nuevoPlato, 
-        precio: parseFloat(nuevoPlato.precio) 
+        nombre: nombreLimpio, 
+        precio: precioNumerico 
       });
     } else {
+      // Crear
       const nuevoId = platos.length > 0 ? Math.max(...platos.map(p => Number(p.id))) + 1 : 1;
       agregarPlato({ 
         id: nuevoId.toString(), 
         ...nuevoPlato, 
-        precio: parseFloat(nuevoPlato.precio) 
+        nombre: nombreLimpio,
+        precio: precioNumerico 
       });
     }
+    
+    // Limpiamos y cerramos
     setNuevoPlato({ nombre: '', categoria: 'Entradas', precio: '', imagen: '' });
     setIdPlatoEditando(null);
     setMostrarModalPlato(false);
   };
 
-  // --- LÓGICA DE RESERVAS Y MESAS ACTUALIZADA ---
+  //  RESERVAS Y MESAS ---
   const cancelarReserva = (id) => {
     if(window.confirm('¿Estás seguro de cancelar esta reserva? La mesa quedará libre.')) {
       eliminarReserva(id); // La borramos de MockAPI
@@ -84,7 +119,7 @@ export default function PanelAdmin() {
       cliente: nuevaReserva.cliente, 
       mesa: nuevaReserva.mesa, 
       personas: nuevaReserva.personas, 
-      estado: "Pendiente", // Reservas manuales nacen "Pendientes"
+      estado: "Pendiente", 
       fecha: nuevaReserva.fecha, 
       hora: nuevaReserva.hora 
     });
@@ -96,11 +131,11 @@ export default function PanelAdmin() {
     alert("Para ocupar o liberar mesas, por favor usa el botón de 'Nueva Reserva' o 'Cancelar' en la pestaña de Reservas. Así mantenemos la base de datos sincronizada.");
   };
 
-  // AQUÍ COMIENZA EL return (
+  
   return (
     <div className="flex min-h-screen bg-gray-100 font-sans">
       
-      {/* SIDEBAR */}
+      {/* */}
       <aside className="w-64 bg-[#1A1A1A] text-white flex flex-col shadow-2xl">
         <div className="p-6 border-b border-zinc-800 text-center">
           <h2 className="text-xl font-black text-white">SABORES <span className="text-red-500">ADMIN</span></h2>
@@ -125,7 +160,7 @@ export default function PanelAdmin() {
         </div>
       </aside>
 
-      {/* ÁREA DE CONTENIDO */}
+      {/* */}
       <main className="flex-1 p-8 overflow-y-auto">
         
         {/* DASHBOARD */}
@@ -149,7 +184,7 @@ export default function PanelAdmin() {
           </div>
         )}
 
-        {/* PLATILLOS (CONECTADO A LA API/CONTEXTO) */}
+        {/* ) */}
         {seccionActiva === 'platillos' && (
           <div className="animate-in slide-in-from-bottom-4 duration-500">
             <div className="flex justify-between items-center mb-8">
@@ -180,7 +215,7 @@ export default function PanelAdmin() {
                   <tbody className="divide-y divide-gray-100">
                     {platos.map(plato => (
                       <tr key={plato.id} className="hover:bg-gray-50 transition-colors">
-                        {/* Agregamos la columna de imagen en la tabla */}
+                        
                         <td className="px-6 py-4">
                           {plato.imagen ? (
                             <img src={plato.imagen} alt={plato.nombre} className="w-12 h-12 object-cover rounded-lg shadow-sm" />
@@ -294,18 +329,18 @@ export default function PanelAdmin() {
         <div className="fixed inset-0 bg-zinc-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden animate-in zoom-in duration-300">
             <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-              {/* Título dinámico */}
+             
               <h3 className="text-xl font-bold text-[#2A2A35]">{idPlatoEditando ? 'Editar Platillo' : 'Registrar Nuevo Plato'}</h3>
               <button onClick={() => setMostrarModalPlato(false)} className="text-gray-400 hover:text-gray-600 bg-white rounded-full p-2 shadow-sm">✕</button>
             </div>
-            {/* Formulario arreglado apuntando a handleGuardarPlato */}
+            
             <form onSubmit={handleGuardarPlato} className="p-6 space-y-4">
               <div>
                 <label className="block text-xs font-bold text-[#2A2A35] uppercase mb-1">Nombre</label>
                 <input type="text" required className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-red-500 outline-none" value={nuevoPlato.nombre} onChange={e => setNuevoPlato({...nuevoPlato, nombre: e.target.value})} />
               </div>
 
-              {/* Campo para la foto URL */}
+              
               <div>
                 <label className="block text-xs font-bold text-[#2A2A35] uppercase mb-1">URL de la Imagen (Link)</label>
                 <input 
@@ -359,10 +394,10 @@ export default function PanelAdmin() {
                     value={nuevaReserva.mesa} 
                     onChange={e => setNuevaReserva({...nuevaReserva, mesa: e.target.value})}
                   >
-                    {/* Agregamos una opción por defecto */}
+                    
                     <option value="" disabled>Elige mesa libre...</option>
                     
-                    {/* Filtramos para mostrar SOLO las mesas que están disponibles */}
+                    
                     {mesas.filter(m => m.estado === 'disponible').map(m => (
                       <option key={m.id} value={m.numero}>Mesa {m.numero}</option>
                     ))}

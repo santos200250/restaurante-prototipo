@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react';
-// Importamos el contexto de reservas
 import { ReservasContext } from '../context/ReservasContext';
 
 export default function Reserva() {
   // Extraemos las reservas y la función para agregar de la nube
   const { reservas, agregarReserva } = useContext(ReservasContext);
 
-  // Construimos las 15 mesas de forma dinámica comprobando si están en la base de datos
+  
   const mesas = Array.from({ length: 15 }, (_, i) => {
     const numeroMesa = (i + 1).toString().padStart(2, '0');
     // Verificamos si esta mesa ya está en la lista de reservas de MockAPI

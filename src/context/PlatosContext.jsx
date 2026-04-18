@@ -20,7 +20,7 @@ export const PlatosProvider = ({ children }) => {
           setPlatos(datosApi);
         }
       } catch (error) {
-        console.error("Error al conectar con la API:", error);
+        console.error("Error al conectar", error);
       } finally {
         setCargando(false);
       }
@@ -52,14 +52,14 @@ export const PlatosProvider = ({ children }) => {
   const editarPlato = async (id, platoActualizado) => {
     try {
       const respuesta = await fetch(`${API_URL}/${id}`, {
-        method: 'PUT', // PUT significa "Actualizar" en el protocolo web
+        method: 'PUT', // actualiza
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(platoActualizado) 
       });
       
       if (respuesta.ok) {
         const platoModificado = await respuesta.json();
-        // Buscamos el plato antiguo en la lista y lo reemplazamos por el nuevo
+        // Busca el plato antiguo para reemplazarlo
         setPlatos((prev) => prev.map(p => p.id === id ? platoModificado : p));
         return true;
       }

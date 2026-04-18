@@ -1,16 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { PlatosContext } from '../context/PlatosContext';
 import { useNavigate } from 'react-router-dom';
-// --- APLICAMOS LA OPTIMIZACIÓN (REACT.MEMO) ---
-// Extraemos la tarjeta a su propio componente y la envolvemos con React.memo.
-// Esto evita re-renderizados innecesarios en el navegador del cliente.
+// --- APLICAMOS  REACT.MEMO protege contra re-renderizados innecesarios ---
+
 const PlatoCard = React.memo(({ plato }) => {
   // Inicializamos el navegador para poder cambiar de página
   const navigate = useNavigate(); 
 
   return (
-    <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group flex flex-col">
-      {/* Imagen del Plato */}
+<div className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200 group flex flex-col">      {/* Imagen del Plato */}
       <div className="h-56 overflow-hidden relative bg-gray-200">
         {plato.imagen ? (
           <img 
@@ -64,7 +62,7 @@ export default function Menu() {
     : platos.filter(plato => plato.categoria === categoriaActiva);
 
   return (
-    <div className="pt-28 pb-24 min-h-screen bg-gray-50 font-sans">
+    <div className="pt-28 pb-24 min-h-screen bg-zinc-100 font-sans">
       <div className="max-w-7xl mx-auto px-4">
         
         {/* Título de la página */}

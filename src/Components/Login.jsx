@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  // Mantenemos tus variables de estado originales
+  
   const [usuario, setUsuario] = useState('');
   const [clave, setClave] = useState('');
   const [error, setError] = useState('');
@@ -11,9 +11,9 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Tu lógica de validación
+   
     if (usuario === 'admin' && clave === '12345') {
-      setError(''); // Limpiamos el error si estaba visible
+      setError(''); 
       navigate('/admin');
     } else {
       setError('Usuario o contraseña incorrectos');
@@ -24,7 +24,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-zinc-900 py-12 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-4xl w-full flex bg-white rounded-2xl shadow-2xl overflow-hidden">
         
-        {/* Lado Izquierdo - Formulario */}
+        {/* */}
         <div className="w-full md:w-1/2 p-8 sm:p-12 flex flex-col justify-center">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-800">Bienvenido</h2>
@@ -56,7 +56,7 @@ export default function Login() {
               />
             </div>
 
-            {/* Mensaje de Error con estilo Tailwind */}
+            {/*  */}
             {error && (
               <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 text-sm rounded">
                 {error}
@@ -81,7 +81,7 @@ export default function Login() {
           </form>
         </div>
 
-        {/* Lado Derecho - Imagen */}
+        {/*  */}
         <div 
           className="hidden md:block w-1/2 bg-cover bg-center relative" 
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=800&auto=format&fit=crop')" }}
